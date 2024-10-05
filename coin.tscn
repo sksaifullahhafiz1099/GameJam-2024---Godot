@@ -1,19 +1,22 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Assets/02-Pig/Idle (34x28).png" type="Texture" id=1]
-[ext_resource path="res://enemy.gd" type="Script" id=2]
-[ext_resource path="res://Assets/02-Pig/Hit (34x28).png" type="Texture" id=3]
+
+[sub_resource type="GDScript" id=14]
+script/source = "extends Area2D
+
+var health
+
+func _ready():
+	health = 3
+
+func _process(delta):
+	pass
+
+"
 
 [sub_resource type="RectangleShape2D" id=13]
 extents = Vector2( 8.5, 8.5 )
-
-[sub_resource type="AtlasTexture" id=14]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 0, 34, 28 )
-
-[sub_resource type="AtlasTexture" id=15]
-atlas = ExtResource( 3 )
-region = Rect2( 34, 0, 34, 28 )
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
@@ -61,11 +64,6 @@ region = Rect2( 340, 0, 34, 28 )
 
 [sub_resource type="SpriteFrames" id=12]
 animations = [ {
-"frames": [ SubResource( 14 ), SubResource( 15 ) ],
-"loop": true,
-"name": "hit",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ) ],
 "loop": true,
 "name": "ifle",
@@ -73,7 +71,7 @@ animations = [ {
 } ]
 
 [node name="enemy" type="Area2D" groups=["enemy"]]
-script = ExtResource( 2 )
+script = SubResource( 14 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 2.5, 5.5 )
@@ -81,8 +79,5 @@ shape = SubResource( 13 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="." groups=["enemy"]]
 frames = SubResource( 12 )
-animation = "hit"
-frame = 1
+animation = "ifle"
 playing = true
-
-[connection signal="area_entered" from="." to="." method="_on_enemy_area_entered"]
